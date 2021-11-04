@@ -1,1 +1,4 @@
-# Yieldstreet
+- Create React App
+    - Cannot Create Aliases Without Ejecting
+- Redux Toolkit
+- Material UI
