@@ -1,3 +1,3 @@
-export interface TodoState {
+export interface ITodoState {
   count: number;
 }

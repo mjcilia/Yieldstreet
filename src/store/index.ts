@@ -2,20 +2,28 @@ import {
   Action,
   configureStore,
   ConfigureStoreOptions,
-  ThunkAction
-} from '@reduxjs/toolkit';
-import todoReducer from './todo';
-import { NAMESPACE as TODO_NAMESPACE } from './todo/todoSlice';
+  ThunkAction,
+} from "@reduxjs/toolkit";
+import { TODO_NAMESPACE } from "./IAppState";
+import todoReducer from "./todo";
 
-// Assign Store Configuration
+/**
+ * Assign Store Config
+ *
+ * @constant { ConfigureStoreOptions } config
+ */
 const config: ConfigureStoreOptions = {
   reducer: {
-    [TODO_NAMESPACE]: todoReducer
+    [TODO_NAMESPACE]: todoReducer,
   },
-  devTools: true
-}
+  devTools: true,
+};
 
-// Configure Store
+/**
+ * Configure Redux Store
+ *
+ * @constant store
+ */
 export const store = configureStore(config);
 
 export type AppDispatch = typeof store.dispatch;
