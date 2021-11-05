@@ -1,6 +1,8 @@
 import React from "react";
-import Header from "./components/header";
+import { MainTemplate } from "./components/templates";
 
-const App = (): JSX.Element => <Header wide />;
+const App = (): JSX.Element => {
+  return <MainTemplate />;
+};
 
 export default App;
