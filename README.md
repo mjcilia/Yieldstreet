@@ -18,3 +18,4 @@
 
 Todo
  - Review CSS Theming
+ - Review Images
