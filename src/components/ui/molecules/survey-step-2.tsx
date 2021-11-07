@@ -49,7 +49,7 @@ const YSurveyStep2 = (): JSX.Element => {
    */
   const renderSelect = (): JSX.Element => {
     return (
-      <FormControl variant="filled" sx={{ width: "60%" }}>
+      <FormControl variant="filled" sx={{ width: "60%" }} required>
         <InputLabel id="age">Age</InputLabel>
         <Select name="age" labelId="age" value={age} onChange={handleChange}>
           <MenuItem value={20}>Over 20</MenuItem>
@@ -70,10 +70,11 @@ const YSurveyStep2 = (): JSX.Element => {
   const renderRadio = (): JSX.Element => {
     return (
       <Fragment>
-        <InputLabel id="select-age">Gender</InputLabel>
+        <InputLabel id="select-age">Gender *</InputLabel>
         <RadioGroup row name="gender" value={gender} onChange={handleChange}>
-          <FormControlLabel value="female" control={<Radio />} label="Female" />
           <FormControlLabel value="male" control={<Radio />} label="Male" />
+          <FormControlLabel value="female" control={<Radio />} label="Female" />
+          <FormControlLabel value="other" control={<Radio />} label="Other" />
         </RadioGroup>
       </Fragment>
     );

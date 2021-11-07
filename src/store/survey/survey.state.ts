@@ -17,12 +17,16 @@ export interface ISurveyDataIdentity {
 
 export interface ISurveyDataDetails {
   age: string;
-  gender: "male" | "female";
+  gender: "male" | "female" | "other";
 }
 
 export interface ISurveyDataFavorites {
   book: string;
-  colors: Array<string>;
+  colors: {
+    red: boolean;
+    green: boolean;
+    blue: boolean;
+  };
 }
 
 export interface ISurveyState {
@@ -63,8 +67,12 @@ export const initialState: ISurveyState = {
         gender: "male",
       },
       favorites: {
-        book: "Born to Manage",
-        colors: ["blue"],
+        book: "",
+        colors: {
+          red: false,
+          green: false,
+          blue: false,
+        },
       },
     },
   },

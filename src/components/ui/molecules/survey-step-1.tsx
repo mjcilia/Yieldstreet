@@ -35,7 +35,7 @@ const YSurveyStep1 = (): JSX.Element => {
         <Grid item sx={{ mt: 2 }} sm={12}>
           <TextField
             id="name"
-            label="First Name"
+            label="First Name (Optional)"
             value={name}
             placeholder="Your Name Here"
             variant="filled"
@@ -46,7 +46,7 @@ const YSurveyStep1 = (): JSX.Element => {
         <Grid item sx={{ mt: 2 }} sm={12}>
           <TextField
             id="email"
-            label="Email"
+            label="Email (Optional)"
             value={email}
             type="email"
             placeholder="Your Email Here"
