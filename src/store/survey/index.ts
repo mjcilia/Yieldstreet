@@ -1,7 +1,13 @@
 import { surveySlice } from "./survey.slice";
 
 // Todo Actions
-export const { updateStepIdentity, updateStepDetails } = surveySlice.actions;
+export const {
+  updateStepIdentity,
+  updateStepDetails,
+  updateStepFavorites,
+  nextStep,
+  prevStep,
+} = surveySlice.actions;
 
 // Todo Selectors
 export {

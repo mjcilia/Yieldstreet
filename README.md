@@ -12,6 +12,7 @@
         - Theming
     - Performance
         - Service Workers - Worbkox
+    - Logging - Sentry
 
 - Assumptions
     - Mobile is Also a Pop Up  

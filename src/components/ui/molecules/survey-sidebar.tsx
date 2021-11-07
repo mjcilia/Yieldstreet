@@ -1,26 +1,25 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
+import { useAppSelector } from "../../../store/store.hooks";
+import { selectContent, selectActiveStep } from "../../../store/survey";
+import { ISurveyContent } from "../../../store/survey/survey.state";
 import { YSurveyLogo } from "../atoms";
 
-export type YSurveySidebarProps = {
-  activeStep: number;
-  steps: Array<string>;
-  content: {
-    heading: string;
-    subHeading: string;
-  };
-};
-
-const YSurveySidebar = ({
-  activeStep,
-  steps,
-  content,
-}: YSurveySidebarProps): JSX.Element => {
+const YSurveySidebar = (): JSX.Element => {
   /**
-   * @constant {string} heading
-   * @constant {string} subHeading
+   * Assign name and email via selectActiveStep Selector
+   *
+   * @constant {number} activeStep
    */
-  const { heading, subHeading } = content;
+  const activeStep: number = useAppSelector(selectActiveStep);
+
+  /**
+   * Assign name and email via selectContent Selector
+   *
+   * @constant sidebar
+   * @constant {Array<string>} steps
+   */
+  const { sidebar, steps }: ISurveyContent = useAppSelector(selectContent);
 
   /**
    * @constant { number } totalSteps
@@ -34,10 +33,10 @@ const YSurveySidebar = ({
         Step {activeStep + 1} of {totalSteps}
       </Typography>
       <Typography paragraph variant="h4">
-        {heading}
+        {sidebar.heading}
       </Typography>
       <Typography paragraph variant="body2">
-        {subHeading}
+        {sidebar.subHeading}
       </Typography>
     </Box>
   );

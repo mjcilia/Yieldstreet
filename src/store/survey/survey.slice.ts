@@ -73,5 +73,17 @@ export const surveySlice = createSlice({
     ) => {
       state.data.steps.details = action.payload;
     },
+    updateStepFavorites: (
+      state: ISurveyState,
+      action: PayloadAction<ISurveyDataFavorites>
+    ) => {
+      state.data.steps.favorites = action.payload;
+    },
+    nextStep: (state: ISurveyState) => {
+      state.meta.activeStep += 1;
+    },
+    prevStep: (state: ISurveyState) => {
+      state.meta.activeStep -= 1;
+    },
   },
 });
