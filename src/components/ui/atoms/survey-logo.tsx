@@ -1,6 +1,6 @@
 import React from "react";
 
-const YLogo = (): JSX.Element => {
+const YSurveyLogo = (): JSX.Element => {
   return (
     <img
       src="https://www.yieldstreet.com/static/media/black_ys_logo_full.c73840eb.svg"
@@ -9,4 +9,4 @@ const YLogo = (): JSX.Element => {
   );
 };
 
-export default YLogo;
+export default YSurveyLogo;

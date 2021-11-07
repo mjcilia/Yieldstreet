@@ -1,36 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Grid, TextField } from "@mui/material";
+import { useAppSelector, useAppDispatch } from "../../../store/store.hooks";
+import { selectStepIdentity, updateStepIdentity } from "../../../store/survey";
+import { ISurveyDataIdentity } from "../../../store/survey/survey.state";
 
-export type YSurveyStep1Props = {
-  onDataChange: Function;
-};
-
-export interface ISurveyStep {
-  name: string;
-  email: string;
-}
-
-const defaults: ISurveyStep = {
-  name: "",
-  email: "youremail@gmail.com",
-};
-
-const YSurveyStep1 = ({ onDataChange }: YSurveyStep1Props): JSX.Element => {
-  const [surveyData, setSurveyData] = useState(defaults);
+const YSurveyStep1 = (): JSX.Element => {
+  const dispatch = useAppDispatch();
 
   /**
-   * Handles Input Changes and Calls Parent Callback
+   * Assign name and email via selectStepIdentity Selector
+   *
+   * @constant {ISurveyDataIdentity} name
+   * @constant {ISurveyDataIdentity} email
+   */
+  const { name, email }: ISurveyDataIdentity =
+    useAppSelector(selectStepIdentity);
+
+  /**
+   * Handles Input Changes and Updates State
+   * via useAppDispatch
    *
    * @function handleChange
    * @param e {React.ChangeEvent<HTMLInputElement>}
    */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = e.target;
-    setSurveyData({
-      ...surveyData,
-      [id]: value,
-    });
-    onDataChange(surveyData);
+    const data = { name, email, ...{ [id]: value } };
+    dispatch(updateStepIdentity(data));
   };
 
   return (
@@ -40,6 +36,7 @@ const YSurveyStep1 = ({ onDataChange }: YSurveyStep1Props): JSX.Element => {
           <TextField
             id="name"
             label="First Name"
+            value={name}
             placeholder="Your Name Here"
             variant="filled"
             sx={{ width: "60%" }}
@@ -50,6 +47,7 @@ const YSurveyStep1 = ({ onDataChange }: YSurveyStep1Props): JSX.Element => {
           <TextField
             id="email"
             label="Email"
+            value={email}
             type="email"
             placeholder="Your Email Here"
             variant="filled"

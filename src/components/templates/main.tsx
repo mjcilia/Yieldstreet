@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Modal, Fade } from "@mui/material";
-import { YSurveySignupContainer } from "../containers";
+import { YSurvey } from "../ui";
 import { ModalWrapper } from "./main.style";
 
 const MainTemplate = (): JSX.Element => {
@@ -9,7 +9,7 @@ const MainTemplate = (): JSX.Element => {
       <Modal open>
         <Fade in>
           <ModalWrapper>
-            <YSurveySignupContainer />
+            <YSurvey />
           </ModalWrapper>
         </Fade>
       </Modal>

@@ -1,1 +1,1 @@
-export { default as YSurveySignup } from "./organisms/survey-signup";
+export { default as YSurvey } from "./organisms/survey";

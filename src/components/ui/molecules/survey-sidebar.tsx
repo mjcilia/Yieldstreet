@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { YLogo } from "../atoms";
+import { YSurveyLogo } from "../atoms";
 
 export type YSurveySidebarProps = {
   activeStep: number;
-  totalSteps: number;
+  steps: Array<string>;
   content: {
     heading: string;
     subHeading: string;
@@ -13,16 +13,25 @@ export type YSurveySidebarProps = {
 
 const YSurveySidebar = ({
   activeStep,
-  totalSteps,
+  steps,
   content,
 }: YSurveySidebarProps): JSX.Element => {
+  /**
+   * @constant {string} heading
+   * @constant {string} subHeading
+   */
   const { heading, subHeading } = content;
+
+  /**
+   * @constant { number } totalSteps
+   */
+  const totalSteps: number = steps.length;
 
   return (
     <Box>
-      <YLogo />
+      <YSurveyLogo />
       <Typography paragraph variant="body1" sx={{ my: 3 }}>
-        Step {activeStep} of {totalSteps}
+        Step {activeStep + 1} of {totalSteps}
       </Typography>
       <Typography paragraph variant="h4">
         {heading}

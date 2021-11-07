@@ -1,11 +1,6 @@
-import {
-  Action,
-  configureStore,
-  ConfigureStoreOptions,
-  ThunkAction,
-} from "@reduxjs/toolkit";
-import { TODO_NAMESPACE } from "./IAppState";
-import todoReducer from "./todo";
+import { configureStore, ConfigureStoreOptions } from "@reduxjs/toolkit";
+import { SURVEY_NAMESPACE } from "./store.state";
+import surveyReducer from "./survey";
 
 /**
  * Assign Store Config
@@ -14,7 +9,7 @@ import todoReducer from "./todo";
  */
 const config: ConfigureStoreOptions = {
   reducer: {
-    [TODO_NAMESPACE]: todoReducer,
+    [SURVEY_NAMESPACE]: surveyReducer,
   },
   devTools: true,
 };
@@ -28,9 +23,3 @@ export const store = configureStore(config);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
