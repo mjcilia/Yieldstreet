@@ -16,7 +16,6 @@ const YSurveyStep4 = (): JSX.Element => {
   const capitalize = (string: string): string => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
-  /*eslint-disable */
   const { identity, details, favorites }: ISurveyData =
     useAppSelector(selectSurveyData);
   const { book, colors } = favorites;
@@ -24,14 +23,12 @@ const YSurveyStep4 = (): JSX.Element => {
 
   const getColorValues = (): string => {
     return Object.keys(colors)
-      .map((keyName, keyIndex) =>
+      .map((keyName) =>
         (colors as any)[keyName] ? capitalize(keyName) : false
       )
       .filter((x) => x)
-      .join(', ');
+      .join(", ");
   };
-
-  getColorValues();
 
   return (
     <TableContainer component={Paper}>
@@ -43,7 +40,7 @@ const YSurveyStep4 = (): JSX.Element => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(data).map((keyName, keyIndex) => (
+          {Object.keys(data).map((keyName) => (
             <TableRow key={keyName}>
               <TableCell component="th" scope="row">
                 {capitalize(keyName)}

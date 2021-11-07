@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Button } from "@mui/material";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { useAppSelector, useAppDispatch } from "../../../store/store.hooks";
 import {
   selectActiveStep,
@@ -34,21 +35,36 @@ const YSurveyNavigation = (): JSX.Element => {
     dispatch(prevStep());
   };
 
+  /**
+   * @constant {boolean} isFirst
+   */
   const isFirst: boolean = activeStep === 0;
+
+  /**
+   * @constant {boolean} isLast
+   */
   const isLast: boolean = activeStep === steps.length - 1;
 
   return (
     <Fragment>
-      {!isLast && (
-        <Button variant="contained" onClick={handleNext} sx={{ mr: 1 }}>
-          Next
-        </Button>
-      )}
-      {!isFirst && (
-        <Button variant="contained" onClick={handlePrev}>
-          Previous
-        </Button>
-      )}
+      <Button
+        disabled={isFirst}
+        variant="contained"
+        onClick={handlePrev}
+        sx={{ mr: 0.5 }}
+        startIcon={<ArrowBack />}
+      >
+        Previous
+      </Button>
+      <Button
+        disabled={isLast}
+        variant="contained"
+        onClick={handleNext}
+        sx={{ mr: 0.5 }}
+        startIcon={<ArrowForward />}
+      >
+        Next
+      </Button>
     </Fragment>
   );
 };

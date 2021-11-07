@@ -55,7 +55,7 @@ const YSurveyStep3 = (): JSX.Element => {
       .required(),
   });
 
-  const validateStep = () => {
+  const validate = () => {
     const { error } = stepSchema.validate({ book, colors });
     if (error !== undefined) {
       setErrors({ ...errors, book: true });
@@ -76,7 +76,7 @@ const YSurveyStep3 = (): JSX.Element => {
     const { id, value } = e.target;
     const data = { book, colors, ...{ [id]: value } };
     dispatch(updateStepFavorites(data));
-    validateStep();
+    validate();
   };
 
   /**
@@ -94,7 +94,7 @@ const YSurveyStep3 = (): JSX.Element => {
     const colorSelection = { ...colors, ...{ [name]: !(colors as any)[name] } };
     const data = { book, colors: colorSelection };
     dispatch(updateStepFavorites(data));
-    validateStep();
+    validate();
   };
 
   /**
