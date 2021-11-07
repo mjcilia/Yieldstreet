@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Joi from "joi";
 import {
   Box,
   Grid,
@@ -16,7 +17,17 @@ import {
 } from "../../../store/survey";
 import { ISurveyDataFavorites } from "../../../store/survey/survey.state";
 
+export interface Errors {
+  book: boolean;
+  colors: boolean;
+}
+
 const YSurveyStep3 = (): JSX.Element => {
+  const [errors, setErrors] = useState<Errors>({
+    book: false,
+    colors: false,
+  });
+
   const dispatch = useAppDispatch();
 
   /**
@@ -27,6 +38,31 @@ const YSurveyStep3 = (): JSX.Element => {
    */
   const { book, colors }: ISurveyDataFavorites =
     useAppSelector(selectStepFavorites);
+
+  /**
+   * Joi Schema Object
+   *
+   * @constant {JoiSchema} stepSchema
+   */
+  const stepSchema = Joi.object({
+    book: Joi.string().required(),
+    colors: Joi.object({
+      red: Joi.boolean().required(),
+      green: Joi.boolean().required(),
+      blue: Joi.boolean().required(),
+    })
+      .length(3)
+      .required(),
+  });
+
+  const validateStep = () => {
+    const { error } = stepSchema.validate({ book, colors });
+    if (error !== undefined) {
+      setErrors({ ...errors, book: true });
+    } else {
+      setErrors({ book: false, colors: false });
+    }
+  };
 
   /**
    * Handles Input Changes and Updates State
@@ -40,6 +76,7 @@ const YSurveyStep3 = (): JSX.Element => {
     const { id, value } = e.target;
     const data = { book, colors, ...{ [id]: value } };
     dispatch(updateStepFavorites(data));
+    validateStep();
   };
 
   /**
@@ -57,6 +94,7 @@ const YSurveyStep3 = (): JSX.Element => {
     const colorSelection = { ...colors, ...{ [name]: !(colors as any)[name] } };
     const data = { book, colors: colorSelection };
     dispatch(updateStepFavorites(data));
+    validateStep();
   };
 
   /**
@@ -68,7 +106,7 @@ const YSurveyStep3 = (): JSX.Element => {
   const renderMultiInputChecbox = (): JSX.Element => {
     return (
       <FormControl required>
-        <FormLabel>Favorite Color</FormLabel>
+        <FormLabel>Favorite Colors</FormLabel>
         <FormGroup>
           <FormControlLabel
             control={
@@ -117,6 +155,7 @@ const YSurveyStep3 = (): JSX.Element => {
             placeholder="Your Favorite Book Here"
             variant="filled"
             sx={{ width: "60%" }}
+            error={errors.book}
             onChange={handleChange}
           />
         </Grid>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Modal, Fade } from "@mui/material";
+import { Modal, Fade } from "@mui/material";
 import { YSurvey } from "../ui";
 import { ModalWrapper } from "./main.style";
 
@@ -11,15 +11,13 @@ const MainTemplate = (): JSX.Element => {
   }, []);
 
   return (
-    <Box>
-      <Modal open={surveyOpen}>
-        <Fade in>
-          <ModalWrapper>
-            <YSurvey />
-          </ModalWrapper>
-        </Fade>
-      </Modal>
-    </Box>
+    <Modal open={surveyOpen}>
+      <Fade in>
+        <ModalWrapper>
+          <YSurvey />
+        </ModalWrapper>
+      </Fade>
+    </Modal>
   );
 };
 

@@ -5,6 +5,7 @@ import {
   YSurveyStep1,
   YSurveyStep2,
   YSurveyStep3,
+  YSurveyStep4,
   YSurveyNavigation,
 } from "../molecules";
 import YSurveyWizard from "../molecules/survey-wizard";
@@ -22,6 +23,7 @@ const YSurvey = (): JSX.Element => {
             <YSurveyStep1 />
             <YSurveyStep2 />
             <YSurveyStep3 />
+            <YSurveyStep4 />
           </YSurveyWizard>
           <Grid item sm={12} sx={{ mt: 3 }}>
             <YSurveyNavigation />

@@ -8,6 +8,7 @@ export interface ISurveyContent {
 
 export interface ISurveyMeta {
   activeStep: number;
+  isValid: boolean;
 }
 
 export interface ISurveyDataIdentity {
@@ -29,16 +30,16 @@ export interface ISurveyDataFavorites {
   };
 }
 
+export interface ISurveyData {
+  identity: ISurveyDataIdentity;
+  details: ISurveyDataDetails;
+  favorites: ISurveyDataFavorites;
+}
+
 export interface ISurveyState {
   content: ISurveyContent;
   meta: ISurveyMeta;
-  data: {
-    steps: {
-      identity: ISurveyDataIdentity;
-      details: ISurveyDataDetails;
-      favorites: ISurveyDataFavorites;
-    };
-  };
+  data: ISurveyData;
 }
 
 /**
@@ -55,24 +56,23 @@ export const initialState: ISurveyState = {
   },
   meta: {
     activeStep: 0,
+    isValid: false,
   },
   data: {
-    steps: {
-      identity: {
-        name: "",
-        email: "",
-      },
-      details: {
-        age: "30",
-        gender: "male",
-      },
-      favorites: {
-        book: "",
-        colors: {
-          red: false,
-          green: false,
-          blue: false,
-        },
+    identity: {
+      name: "",
+      email: "",
+    },
+    details: {
+      age: "30",
+      gender: "male",
+    },
+    favorites: {
+      book: "",
+      colors: {
+        red: false,
+        green: false,
+        blue: false,
       },
     },
   },

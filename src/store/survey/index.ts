@@ -11,6 +11,8 @@ export const {
 
 // Todo Selectors
 export {
+  selectSurvey,
+  selectSurveyData,
   selectContent,
   selectActiveStep,
   selectStepDetails,
