@@ -73,6 +73,28 @@ const YSurveyStep3 = (): JSX.Element => {
   };
 
   /**
+   * Renders renderTextField
+   *
+   * @function renderInput
+   * @returns {JSX.Element}
+   */
+  const renderTextField = (): JSX.Element => {
+    return (
+      <TextField
+        required
+        error={errors.favorites}
+        id="book"
+        label="Favorite Book"
+        value={book}
+        placeholder="Your Favorite Book Here"
+        variant="filled"
+        sx={{ width: "100%" }}
+        onChange={handleChange}
+      />
+    );
+  };
+
+  /**
    * Renders Multi Input Checkbox
    *
    * @function renderSelect
@@ -82,7 +104,7 @@ const YSurveyStep3 = (): JSX.Element => {
     return (
       <FormControl required>
         <FormLabel>Favorite Colors</FormLabel>
-        <FormGroup>
+        <FormGroup row>
           <FormControlLabel
             control={
               <Checkbox
@@ -120,29 +142,19 @@ const YSurveyStep3 = (): JSX.Element => {
 
   return (
     <Box component="form">
-      <Grid container spacing={0} sx={{ height: "100%" }}>
-        <Grid item sm={12} sx={{ minHeight: 40 }}>
+      <Grid container spacing={2} sx={{ height: "100%" }}>
+        <Grid item lg={6} md={12} sm={12}>
+          {renderTextField()}
+        </Grid>
+        <Grid item lg={6} md={12} sm={12}>
+          {renderMultiInputChecbox()}
+        </Grid>
+        <Grid item sm={12}>
           {errors.favorites && (
             <Typography paragraph variant="body1" sx={{ color: "#d32f2f" }}>
               Favorite Book and Favorite Colors are both required.
             </Typography>
           )}
-        </Grid>
-        <Grid item sx={{ mt: 2 }} sm={12}>
-          <TextField
-            required
-            error={errors.favorites}
-            id="book"
-            label="Favorite Book"
-            value={book}
-            placeholder="Your Favorite Book Here"
-            variant="filled"
-            sx={{ width: "60%" }}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item sx={{ mt: 2 }} sm={12}>
-          {renderMultiInputChecbox()}
         </Grid>
       </Grid>
     </Box>

@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Button } from "@mui/material";
+import React from "react";
+import { Button, Stack } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { useAppSelector, useAppDispatch } from "../../../store/store.hooks";
 import {
@@ -65,12 +65,12 @@ const YSurveyNavigation = (): JSX.Element => {
   const isLast: boolean = activeStep === steps.length - 1;
 
   return (
-    <Fragment>
+    <Stack spacing={1} direction="row">
       <Button
         disabled={isFirst}
         variant="contained"
         onClick={handlePrev}
-        sx={{ mr: 0.5 }}
+        sx={{ mb: 0.5 }}
         startIcon={<ArrowBack />}
       >
         Previous
@@ -79,7 +79,6 @@ const YSurveyNavigation = (): JSX.Element => {
         <Button
           variant="contained"
           onClick={handleNext}
-          sx={{ mr: 0.5 }}
           endIcon={<ArrowForward />}
         >
           Next
@@ -91,13 +90,12 @@ const YSurveyNavigation = (): JSX.Element => {
           color="secondary"
           variant="contained"
           onClick={handleSubmit}
-          sx={{ mr: 0.5 }}
           endIcon={<ArrowForward />}
         >
           Submit
         </Button>
       )}
-    </Fragment>
+    </Stack>
   );
 };
 

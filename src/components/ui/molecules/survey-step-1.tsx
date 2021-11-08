@@ -44,39 +44,63 @@ const YSurveyStep1 = (): JSX.Element => {
     dispatch(updateSurveyIdentity(data));
   };
 
+  /**
+   * Renders renderInputName
+   *
+   * @function renderInputName
+   * @returns {JSX.Element}
+   */
+  const renderInputName = (): JSX.Element => {
+    return (
+      <TextField
+        id="name"
+        label="First Name (Optional)"
+        value={name}
+        placeholder="Your Name Here"
+        variant="filled"
+        sx={{ width: "100%" }}
+        onChange={handleChange}
+      />
+    );
+  };
+
+  /**
+   * Renders renderInputEmail
+   *
+   * @function renderInputEmail
+   * @returns {JSX.Element}
+   */
+  const renderInputEmail = (): JSX.Element => {
+    return (
+      <TextField
+        error={errors.identity}
+        id="email"
+        label="Email (Optional)"
+        value={email}
+        type="email"
+        placeholder="Your Email Here"
+        variant="filled"
+        sx={{ width: "100%" }}
+        onChange={handleChange}
+      />
+    );
+  };
+
   return (
     <Box component="form">
-      <Grid container spacing={0} sx={{ height: "100%" }}>
-        <Grid item sm={12} sx={{ minHeight: 40 }}>
+      <Grid container spacing={1} sx={{ height: "100%" }}>
+        <Grid item lg={6} md={12} sm={12}>
+          {renderInputName()}
+        </Grid>
+        <Grid item lg={6} md={12} sm={12}>
+          {renderInputEmail()}
+        </Grid>
+        <Grid item sm={12} sx={{ textAlign: "right" }}>
           {errors.identity && (
             <Typography paragraph variant="body1" sx={{ color: "#d32f2f" }}>
               Email Address is not valid.
             </Typography>
           )}
-        </Grid>
-        <Grid item sx={{ mt: 2 }} sm={12}>
-          <TextField
-            id="name"
-            label="First Name (Optional)"
-            value={name}
-            placeholder="Your Name Here"
-            variant="filled"
-            sx={{ width: "60%" }}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item sx={{ mt: 2 }} sm={12}>
-          <TextField
-            error={errors.identity}
-            id="email"
-            label="Email (Optional)"
-            value={email}
-            type="email"
-            placeholder="Your Email Here"
-            variant="filled"
-            sx={{ width: "60%" }}
-            onChange={handleChange}
-          />
         </Grid>
       </Grid>
     </Box>

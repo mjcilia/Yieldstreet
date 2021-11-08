@@ -4,7 +4,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
   Typography,
   Paper,
@@ -47,7 +46,7 @@ const YSurveyStep4 = (): JSX.Element => {
 
   return (
     <Grid container spacing={0} sx={{ height: "100%" }}>
-      <Grid item sm={12} sx={{ minHeight: 40 }}>
+      <Grid item sm={12}>
         {!isValid && (
           <Typography paragraph variant="body1" sx={{ color: "#d32f2f" }}>
             Entries are invalid or incomplete. Kindly fix before submitting.
@@ -57,12 +56,6 @@ const YSurveyStep4 = (): JSX.Element => {
       <Grid item sx={{ mt: 2 }} sm={12}>
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>User Details</TableCell>
-                <TableCell align="left">User Values</TableCell>
-              </TableRow>
-            </TableHead>
             <TableBody>
               {Object.keys(data).map((keyName) => (
                 <TableRow key={keyName}>

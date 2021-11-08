@@ -53,7 +53,7 @@ const YSurveyStep2 = (): JSX.Element => {
    */
   const renderSelect = (): JSX.Element => {
     return (
-      <FormControl variant="filled" sx={{ width: "60%" }} required>
+      <FormControl variant="filled" sx={{ width: "100%" }} required>
         <InputLabel id="age">Age</InputLabel>
         <Select name="age" labelId="age" value={age} onChange={handleChange}>
           <MenuItem value={20}>Over 20</MenuItem>
@@ -86,12 +86,11 @@ const YSurveyStep2 = (): JSX.Element => {
 
   return (
     <Box component="form">
-      <Grid container spacing={0} sx={{ height: "100%" }}>
-        <Grid item sm={12} sx={{ minHeight: 40 }} />
-        <Grid item sx={{ mt: 2 }} sm={12}>
+      <Grid container spacing={2} sx={{ height: "100%" }}>
+        <Grid item lg={6} md={12} sm={12}>
           {renderSelect()}
         </Grid>
-        <Grid item sx={{ mt: 2 }} sm={12}>
+        <Grid item lg={6} md={12} sm={12}>
           {renderRadio()}
         </Grid>
       </Grid>

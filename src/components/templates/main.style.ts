@@ -1,5 +1,12 @@
 import styled from "styled-components";
 
+export const TemplateWrapper = styled.div`
+  display: flex;
+  justifycontent: center;
+  alignitems: center;
+  minheight: 100vh;
+`;
+
 export const ModalWrapper = styled.div`
   position: absolute;
   top: 50%;
