@@ -28,6 +28,7 @@
     "typescript": "~4.1.5"
   },
   "devDependencies": {
+    "@types/joi": "^17.2.3",
     "@types/styled-components": "^5.1.15",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-typescript": "^14.0.1",
@@ -85,11 +86,11 @@
         {
           "ImportDeclaration": {
             "multiline": true,
-            "minProperties": 4
+            "minProperties": 5
           },
           "ExportDeclaration": {
             "multiline": true,
-            "minProperties": 4
+            "minProperties": 5
           }
         }
       ],

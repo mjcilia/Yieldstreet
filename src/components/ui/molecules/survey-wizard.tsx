@@ -1,6 +1,10 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { Box } from "@mui/material";
 import { useAppSelector } from "../../../store/store.hooks";
-import { selectContent, selectActiveStep } from "../../../store/survey";
+import {
+  selectSurveyContent,
+  selectSurveyActiveStep,
+} from "../../../store/survey";
 import { ISurveyContent } from "../../../store/survey/survey.state";
 import { YSurveyStepper } from ".";
 
@@ -10,27 +14,29 @@ type YSurveyWizardProps = {
 
 const YSurveyWizard = ({ children }: YSurveyWizardProps): JSX.Element => {
   /**
-   * Assign name and email via selectActiveStep Selector
+   * Assign name and email via selectSurveyActiveStep Selector
    *
    * @constant {number} activeStep
    */
-  const activeStep: number = useAppSelector(selectActiveStep);
+  const activeStep: number = useAppSelector(selectSurveyActiveStep);
 
   /**
-   * Assign name and email via selectContent Selector
+   * Assign name and email via selectSurveyContent Selector
    *
    * @constant {Array<string>} steps
    */
-  const { steps }: ISurveyContent = useAppSelector(selectContent);
+  const { steps }: ISurveyContent = useAppSelector(selectSurveyContent);
 
   return (
-    <Fragment>
-      <YSurveyStepper activeStep={activeStep} steps={steps} />
+    <Box>
+      <Box display={{ xs: "none", sm: "none", lg: "block", xl: "block" }}>
+        <YSurveyStepper activeStep={activeStep} steps={steps} />
+      </Box>
       {children.map(
         (child: JSX.Element, index: number) =>
           activeStep === index && <div key={index}>{child}</div>
       )}
-    </Fragment>
+    </Box>
   );
 };
 

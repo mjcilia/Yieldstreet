@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ValidationResult } from "joi";
 import { SURVEY_NAMESPACE, AppState } from "../store.state";
 import {
   initialState,
@@ -8,7 +9,14 @@ import {
   ISurveyDataDetails,
   ISurveyDataFavorites,
   ISurveyData,
+  ISurveyMeta,
 } from "./survey.state";
+import {
+  surveyIdentitySchema,
+  surveyFavoritesSchema,
+  surveySchema,
+} from "./survey.schema";
+import { transformObjectToArray } from "./survey.utils";
 
 /**
  * selectSurvey Selector
@@ -20,89 +28,141 @@ import {
 export const selectSurvey = (state: AppState): ISurveyState =>
   state[SURVEY_NAMESPACE];
 
+/**
+ * selectSurveyData Selector
+ *
+ * @function selectSurveyData
+ * @param { AppState } state
+ * @returns ISurveyData
+ */
 export const selectSurveyData = (state: AppState): ISurveyData =>
   state[SURVEY_NAMESPACE].data;
 
 /**
- * selectContent Selector
+ * selectSurveyMeta Selector
  *
- * @function selectContent
+ * @function selectSurveyMeta
+ * @param { AppState } state
+ * @returns ISurveyMeta
+ */
+export const selectSurveyMeta = (state: AppState): ISurveyMeta =>
+  state[SURVEY_NAMESPACE].meta;
+
+/**
+ * selectSurveyContent Selector
+ *
+ * @function selectSurveyContent
  * @param { AppState } state
  * @returns ISurveyContent
  */
-export const selectContent = (state: AppState): ISurveyContent =>
+export const selectSurveyContent = (state: AppState): ISurveyContent =>
   state[SURVEY_NAMESPACE].content;
 
 /**
- * selectActiveStep Selector
+ * selectSurveyActiveStep Selector
  *
- * @function selectActiveStep
+ * @function selectSurveyActiveStep
  * @param { AppState } state
  * @returns { number }
  */
-export const selectActiveStep = (state: AppState): number =>
+export const selectSurveyActiveStep = (state: AppState): number =>
   state[SURVEY_NAMESPACE].meta.activeStep;
 
 /**
- * selectStepIdentity Selector
+ * selectSurveyIdentity Selector
  *
- * @function selectStepIdentity
+ * @function selectSurveyIdentity
  * @param { AppState } state
  * @returns { ISurveyDataIdentity }
  */
-export const selectStepIdentity = (state: AppState): ISurveyDataIdentity =>
+export const selectSurveyIdentity = (state: AppState): ISurveyDataIdentity =>
   state[SURVEY_NAMESPACE].data.identity;
 
 /**
- * selectStepDetails Selector
+ * selectSurveyDetails Selector
  *
- * @function selectStepDetails
+ * @function selectSurveyDetails
  * @param { AppState } state
  * @returns { ISurveyDataDetails }
  */
-export const selectStepDetails = (state: AppState): ISurveyDataDetails =>
+export const selectSurveyDetails = (state: AppState): ISurveyDataDetails =>
   state[SURVEY_NAMESPACE].data.details;
 
 /**
- * selectStepFavorites Selector
+ * selectSurveyFavorites Selector
  *
- * @function selectStepFavorites
+ * @function selectSurveyFavorites
  * @param { AppState } state
  * @returns { ISurveyDataFavorites }
  */
-export const selectStepFavorites = (state: AppState): ISurveyDataFavorites =>
+export const selectSurveyFavorites = (state: AppState): ISurveyDataFavorites =>
   state[SURVEY_NAMESPACE].data.favorites;
 
 /**
+ * Reducer Updates are done via Immer as to safeguard immutability
+ * https://github.com/immerjs/immer
+ *
  * @constant { Slice } surveySlice
  */
 export const surveySlice = createSlice({
   name: SURVEY_NAMESPACE,
   initialState,
   reducers: {
-    updateStepIdentity: (
+    updateSurveyIdentity: (
       state: ISurveyState,
       action: PayloadAction<ISurveyDataIdentity>
     ) => {
+      // Update Store
       state.data.identity = action.payload;
+      // Data Validation and Set Errors
+      const { error }: ValidationResult = surveyIdentitySchema.validate(
+        action.payload
+      );
+      state.meta.errors.identity = error ? true : false; // eslint-disable-line no-unneeded-ternary
     },
-    updateStepDetails: (
+    updateSurveyDetails: (
       state: ISurveyState,
       action: PayloadAction<ISurveyDataDetails>
     ) => {
       state.data.details = action.payload;
     },
-    updateStepFavorites: (
+    updateSurveyFavorites: (
       state: ISurveyState,
       action: PayloadAction<ISurveyDataFavorites>
     ) => {
+      // Update Store
       state.data.favorites = action.payload;
+
+      // Data Validation and Set Errors
+      const { book, colors }: ISurveyDataFavorites = action.payload;
+      const colorsArray = transformObjectToArray(colors);
+      const { error }: ValidationResult = surveyFavoritesSchema.validate({
+        book,
+        colors: colorsArray,
+      });
+      state.meta.errors.favorites = error ? true : false; // eslint-disable-line no-unneeded-ternary
     },
-    nextStep: (state: ISurveyState) => {
+    nextSurveyStep: (state: ISurveyState) => {
       state.meta.activeStep += 1;
     },
-    prevStep: (state: ISurveyState) => {
+    prevSurveyStep: (state: ISurveyState) => {
       state.meta.activeStep -= 1;
+    },
+    validateSurvey: (state: ISurveyState) => {
+      const { identity, details, favorites } = state.data;
+      const colorsArray = transformObjectToArray(favorites.colors);
+      const { error }: ValidationResult = surveySchema.validate({
+        identity,
+        details,
+        favorites: {
+          book: favorites.book,
+          colors: colorsArray,
+        },
+      });
+      state.meta.isValid = error ? false : true; // eslint-disable-line no-unneeded-ternary
+    },
+    submitSurvey: (state: ISurveyState) => {
+      state.meta.isSubmitted = true;
     },
   },
 });

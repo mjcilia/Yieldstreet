@@ -12,19 +12,23 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "../../../store/store.hooks";
-import { selectStepDetails, updateStepDetails } from "../../../store/survey";
+import {
+  selectSurveyDetails,
+  updateSurveyDetails,
+} from "../../../store/survey";
 import { ISurveyDataDetails } from "../../../store/survey/survey.state";
 
 const YSurveyStep2 = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   /**
-   * Assign age and gender via selectStepDetails Selector
+   * Assign age and gender via selectSurveyDetails Selector
    *
    * @constant {ISurveyDataDetails} age
    * @constant {ISurveyDataDetails} gender
    */
-  const { age, gender }: ISurveyDataDetails = useAppSelector(selectStepDetails);
+  const { age, gender }: ISurveyDataDetails =
+    useAppSelector(selectSurveyDetails);
 
   /**
    * Handles Input Changes and Updates State
@@ -38,7 +42,7 @@ const YSurveyStep2 = (): JSX.Element => {
   ): void => {
     const { name, value } = e.target;
     const data = { age, gender, ...{ [name]: value } };
-    dispatch(updateStepDetails(data));
+    dispatch(updateSurveyDetails(data));
   };
 
   /**
@@ -72,9 +76,9 @@ const YSurveyStep2 = (): JSX.Element => {
       <Fragment>
         <InputLabel id="select-age">Gender *</InputLabel>
         <RadioGroup row name="gender" value={gender} onChange={handleChange}>
-          <FormControlLabel value="male" control={<Radio />} label="Male" />
-          <FormControlLabel value="female" control={<Radio />} label="Female" />
-          <FormControlLabel value="other" control={<Radio />} label="Other" />
+          <FormControlLabel value="Male" control={<Radio />} label="Male" />
+          <FormControlLabel value="Female" control={<Radio />} label="Female" />
+          <FormControlLabel value="Other" control={<Radio />} label="Other" />
         </RadioGroup>
       </Fragment>
     );
@@ -83,6 +87,7 @@ const YSurveyStep2 = (): JSX.Element => {
   return (
     <Box component="form">
       <Grid container spacing={0} sx={{ height: "100%" }}>
+        <Grid item sm={12} sx={{ minHeight: 40 }} />
         <Grid item sx={{ mt: 2 }} sm={12}>
           {renderSelect()}
         </Grid>

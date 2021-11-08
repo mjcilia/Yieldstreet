@@ -3,37 +3,56 @@ import { Button } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { useAppSelector, useAppDispatch } from "../../../store/store.hooks";
 import {
-  selectActiveStep,
-  selectContent,
-  nextStep,
-  prevStep,
+  selectSurveyActiveStep,
+  selectSurveyContent,
+  selectSurveyMeta,
+  nextSurveyStep,
+  prevSurveyStep,
+  submitSurvey,
 } from "../../../store/survey";
-import { ISurveyContent } from "../../../store/survey/survey.state";
+import {
+  ISurveyContent,
+  ISurveyMeta,
+} from "../../../store/survey/survey.state";
 
 const YSurveyNavigation = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   /**
-   * Assign name and email via selectActiveStep Selector
+   * Assign name and email via selectSurveyActiveStep Selector
    *
    * @constant {number} activeStep
    */
-  const activeStep: number = useAppSelector(selectActiveStep);
+  const activeStep: number = useAppSelector(selectSurveyActiveStep);
 
   /**
-   * Assign name and email via selectContent Selector
+   * Assign isValid via selectSurveyMeta Selector
+   *
+   * @constant {boolean} isValid
+   */
+  const { isValid }: ISurveyMeta = useAppSelector(selectSurveyMeta);
+
+  /**
+   * Assign name and email via selectSurveyContent Selector
    *
    * @constant {Array<string>} steps
    */
-  const { steps }: ISurveyContent = useAppSelector(selectContent);
+  const { steps }: ISurveyContent = useAppSelector(selectSurveyContent);
 
-  const handleNext = (): void => {
-    dispatch(nextStep());
-  };
+  /**
+   * @function handleNext
+   */
+  const handleNext = () => dispatch(nextSurveyStep());
 
-  const handlePrev = (): void => {
-    dispatch(prevStep());
-  };
+  /**
+   * @function handlePrev
+   */
+  const handlePrev = () => dispatch(prevSurveyStep());
+
+  /**
+   * @function handleSubmit
+   */
+  const handleSubmit = () => dispatch(submitSurvey());
 
   /**
    * @constant {boolean} isFirst
@@ -56,15 +75,28 @@ const YSurveyNavigation = (): JSX.Element => {
       >
         Previous
       </Button>
-      <Button
-        disabled={isLast}
-        variant="contained"
-        onClick={handleNext}
-        sx={{ mr: 0.5 }}
-        startIcon={<ArrowForward />}
-      >
-        Next
-      </Button>
+      {!isLast && (
+        <Button
+          variant="contained"
+          onClick={handleNext}
+          sx={{ mr: 0.5 }}
+          endIcon={<ArrowForward />}
+        >
+          Next
+        </Button>
+      )}
+      {isLast && (
+        <Button
+          disabled={!isValid}
+          color="secondary"
+          variant="contained"
+          onClick={handleSubmit}
+          sx={{ mr: 0.5 }}
+          endIcon={<ArrowForward />}
+        >
+          Submit
+        </Button>
+      )}
     </Fragment>
   );
 };

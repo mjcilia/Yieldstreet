@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import Joi from "joi";
+import React from "react";
 import {
   Box,
   Grid,
   TextField,
+  Typography,
   Checkbox,
   FormControl,
   FormGroup,
@@ -12,57 +12,34 @@ import {
 } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "../../../store/store.hooks";
 import {
-  selectStepFavorites,
-  updateStepFavorites,
+  selectSurveyFavorites,
+  selectSurveyMeta,
+  updateSurveyFavorites,
 } from "../../../store/survey";
-import { ISurveyDataFavorites } from "../../../store/survey/survey.state";
-
-export interface Errors {
-  book: boolean;
-  colors: boolean;
-}
+import {
+  ISurveyDataFavorites,
+  ISurveyMeta,
+} from "../../../store/survey/survey.state";
 
 const YSurveyStep3 = (): JSX.Element => {
-  const [errors, setErrors] = useState<Errors>({
-    book: false,
-    colors: false,
-  });
-
   const dispatch = useAppDispatch();
 
   /**
-   * Assign name and email via selectStepFavorites Selector
+   * Assign name and email via selectSurveyFavorites Selector
    *
    * @constant {ISurveyDataFavorites} book
    * @constant {ISurveyDataFavorites} colors
    */
-  const { book, colors }: ISurveyDataFavorites =
-    useAppSelector(selectStepFavorites);
+  const { book, colors }: ISurveyDataFavorites = useAppSelector(
+    selectSurveyFavorites
+  );
 
   /**
-   * Joi Schema Object
+   * Assign errors via selectSurveyMeta
    *
-   * @constant {JoiSchema} stepSchema
+   * @constant {string} errors
    */
-  const stepSchema = Joi.object({
-    book: Joi.string().required(),
-    colors: Joi.object({
-      red: Joi.boolean().required(),
-      green: Joi.boolean().required(),
-      blue: Joi.boolean().required(),
-    })
-      .length(3)
-      .required(),
-  });
-
-  const validate = () => {
-    const { error } = stepSchema.validate({ book, colors });
-    if (error !== undefined) {
-      setErrors({ ...errors, book: true });
-    } else {
-      setErrors({ book: false, colors: false });
-    }
-  };
+  const { errors }: ISurveyMeta = useAppSelector(selectSurveyMeta);
 
   /**
    * Handles Input Changes and Updates State
@@ -75,8 +52,7 @@ const YSurveyStep3 = (): JSX.Element => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = e.target;
     const data = { book, colors, ...{ [id]: value } };
-    dispatch(updateStepFavorites(data));
-    validate();
+    dispatch(updateSurveyFavorites(data));
   };
 
   /**
@@ -93,8 +69,7 @@ const YSurveyStep3 = (): JSX.Element => {
     const { name } = e.target;
     const colorSelection = { ...colors, ...{ [name]: !(colors as any)[name] } };
     const data = { book, colors: colorSelection };
-    dispatch(updateStepFavorites(data));
-    validate();
+    dispatch(updateSurveyFavorites(data));
   };
 
   /**
@@ -146,16 +121,23 @@ const YSurveyStep3 = (): JSX.Element => {
   return (
     <Box component="form">
       <Grid container spacing={0} sx={{ height: "100%" }}>
+        <Grid item sm={12} sx={{ minHeight: 40 }}>
+          {errors.favorites && (
+            <Typography paragraph variant="body1" sx={{ color: "#d32f2f" }}>
+              Favorite Book and Favorite Colors are both required.
+            </Typography>
+          )}
+        </Grid>
         <Grid item sx={{ mt: 2 }} sm={12}>
           <TextField
             required
+            error={errors.favorites}
             id="book"
             label="Favorite Book"
             value={book}
             placeholder="Your Favorite Book Here"
             variant="filled"
             sx={{ width: "60%" }}
-            error={errors.book}
             onChange={handleChange}
           />
         </Grid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -6,21 +6,36 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   Paper,
+  Grid,
 } from "@mui/material";
-import { useAppSelector } from "../../../store/store.hooks";
-import { ISurveyData } from "../../../store/survey/survey.state";
-import { selectSurveyData } from "../../../store/survey";
+import { useAppSelector, useAppDispatch } from "../../../store/store.hooks";
+import { ISurveyData, ISurveyMeta } from "../../../store/survey/survey.state";
+import {
+  selectSurveyData,
+  selectSurveyMeta,
+  validateSurvey,
+} from "../../../store/survey";
 
 const YSurveyStep4 = (): JSX.Element => {
-  const capitalize = (string: string): string => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(validateSurvey());
+  }, []);
+
+  const { isValid }: ISurveyMeta = useAppSelector(selectSurveyMeta);
+
   const { identity, details, favorites }: ISurveyData =
     useAppSelector(selectSurveyData);
+
   const { book, colors } = favorites;
   const data: any = { ...identity, ...details, book };
 
+  const capitalize = (string: string): string => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
   const getColorValues = (): string => {
     return Object.keys(colors)
       .map((keyName) =>
@@ -31,32 +46,43 @@ const YSurveyStep4 = (): JSX.Element => {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>User Details</TableCell>
-            <TableCell align="left">User Values</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Object.keys(data).map((keyName) => (
-            <TableRow key={keyName}>
-              <TableCell component="th" scope="row">
-                {capitalize(keyName)}
-              </TableCell>
-              <TableCell align="left">{data[keyName]}</TableCell>
-            </TableRow>
-          ))}
-          <TableRow key="colors">
-            <TableCell component="th" scope="row">
-              Colors
-            </TableCell>
-            <TableCell align="left">{getColorValues()}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Grid container spacing={0} sx={{ height: "100%" }}>
+      <Grid item sm={12} sx={{ minHeight: 40 }}>
+        {!isValid && (
+          <Typography paragraph variant="body1" sx={{ color: "#d32f2f" }}>
+            Entries are invalid or incomplete. Kindly fix before submitting.
+          </Typography>
+        )}
+      </Grid>
+      <Grid item sx={{ mt: 2 }} sm={12}>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>User Details</TableCell>
+                <TableCell align="left">User Values</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.keys(data).map((keyName) => (
+                <TableRow key={keyName}>
+                  <TableCell component="th" scope="row">
+                    {capitalize(keyName)}
+                  </TableCell>
+                  <TableCell align="left">{data[keyName]}</TableCell>
+                </TableRow>
+              ))}
+              <TableRow key="colors">
+                <TableCell component="th" scope="row">
+                  Colors
+                </TableCell>
+                <TableCell align="left">{getColorValues()}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+    </Grid>
   );
 };
 

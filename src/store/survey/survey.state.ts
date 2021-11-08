@@ -9,6 +9,11 @@ export interface ISurveyContent {
 export interface ISurveyMeta {
   activeStep: number;
   isValid: boolean;
+  isSubmitted: boolean;
+  errors: {
+    identity: boolean;
+    favorites: boolean;
+  };
 }
 
 export interface ISurveyDataIdentity {
@@ -18,7 +23,7 @@ export interface ISurveyDataIdentity {
 
 export interface ISurveyDataDetails {
   age: string;
-  gender: "male" | "female" | "other";
+  gender: "Male" | "Female" | "Other";
 }
 
 export interface ISurveyDataFavorites {
@@ -57,6 +62,11 @@ export const initialState: ISurveyState = {
   meta: {
     activeStep: 0,
     isValid: false,
+    isSubmitted: false,
+    errors: {
+      identity: false,
+      favorites: false,
+    },
   },
   data: {
     identity: {
@@ -65,7 +75,7 @@ export const initialState: ISurveyState = {
     },
     details: {
       age: "30",
-      gender: "male",
+      gender: "Male",
     },
     favorites: {
       book: "",

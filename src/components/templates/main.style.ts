@@ -10,5 +10,4 @@ export const ModalWrapper = styled.div`
   border-radius: 10px;
   width: 70%;
   height: 80%;
-  overflow: hidden;
 `;

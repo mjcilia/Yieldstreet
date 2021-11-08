@@ -25,15 +25,16 @@ const rootReducer = combineReducers({
 });
 
 /**
- * @constant persistConfig
+ * @constant persistedReducer
  */
-const persistConfig = {
-  key: "root",
-  version: 1,
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(
+  {
+    key: "root",
+    version: 1,
+    storage,
+  },
+  rootReducer
+);
 
 /**
  * Assign Store Config

@@ -2,22 +2,25 @@ import { surveySlice } from "./survey.slice";
 
 // Todo Actions
 export const {
-  updateStepIdentity,
-  updateStepDetails,
-  updateStepFavorites,
-  nextStep,
-  prevStep,
+  updateSurveyIdentity,
+  updateSurveyDetails,
+  updateSurveyFavorites,
+  nextSurveyStep,
+  prevSurveyStep,
+  validateSurvey,
+  submitSurvey,
 } = surveySlice.actions;
 
 // Todo Selectors
 export {
   selectSurvey,
   selectSurveyData,
-  selectContent,
-  selectActiveStep,
-  selectStepDetails,
-  selectStepIdentity,
-  selectStepFavorites,
+  selectSurveyMeta,
+  selectSurveyContent,
+  selectSurveyActiveStep,
+  selectSurveyDetails,
+  selectSurveyIdentity,
+  selectSurveyFavorites,
 } from "./survey.slice";
 
 // Todo Reducer
