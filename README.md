@@ -1,5 +1,8 @@
 # Yieldstreet Survey JS Challenge
 
+## Demo
+If you don't want to install the project you can go ahead and checkout the demo on https://mjcilia.github.io/Yieldstreet/.
+
 ## Running the Project
 
 To run the project, kindly follow the below steps.
