@@ -14,11 +14,11 @@ import { ColumnWrapper } from "./survey.style";
 const YSurvey = (): JSX.Element => {
   return (
     <Grid container spacing={0} sx={{ height: "100%", overflowY: "auto" }}>
-      <Grid sx={{ p: 4 }} md={5} sm={12} xs={12}>
+      <Grid item sx={{ p: 4 }} md={5} sm={12} xs={12}>
         <YSurveySidebar />
         <YSurveyNavigation />
       </Grid>
-      <Grid md={7} sm={12} xs={12}>
+      <Grid item md={7} sm={12} xs={12}>
         <ColumnWrapper>
           <YSurveyWizard>
             <YSurveyStep1 />

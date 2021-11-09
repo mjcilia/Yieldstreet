@@ -24,17 +24,46 @@ const YSurveyStep4 = (): JSX.Element => {
     dispatch(validateSurvey());
   });
 
+  /**
+   * Assign isValid via selectSurveyMeta Selector
+   *
+   * @constant {boolean} isValid
+   */
   const { isValid }: ISurveyMeta = useAppSelector(selectSurveyMeta);
 
+  /**
+   * Assign identity, details and favorites via
+   * selectSurveyData Selector
+   *
+   * @constant {ISurveyDataIdentity} identity
+   * @constant {ISurveyDataDetails} details
+   * @constant {ISurveyDataFavorites} favorites
+   */
   const { identity, details, favorites }: ISurveyData =
     useAppSelector(selectSurveyData);
 
+  /**
+   * Assign Merged Data apart from colors
+   */
   const { book, colors } = favorites;
   const data: any = { ...identity, ...details, book };
 
+  /**
+   * Capatilizes Strings
+   *
+   * @param string
+   * @returns {string}
+   */
   const capitalize = (string: string): string => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
+  /**
+   * Formats Colors from Object to String and removes
+   * non truthy values
+   *
+   * @returns {string}
+   */
   const getColorValues = (): string => {
     return Object.keys(colors)
       .map((keyName) =>

@@ -2,7 +2,7 @@
 
 ## Running the Project
 
-To run the project, you have to follow the below steps.
+To run the project, kindly follow the below steps.
 
 ### Project Clone and Node Modules Installation
 ```sh
@@ -82,7 +82,9 @@ npm run test
 
     - Functional Components were used through out. As a functional programming advocate myself I find functional components more performant, easier to test, easier to reason about and in general more reusable. Functional components in a way were not utilised to the fullest of extents as they still rely on state nonetheless I wanted to keep things simple for the sake of this challenge.   
     
-    - Brad Frosts Atomic Design was used in relation to component structure, thus why components are seperated into 4 distinct levels, namely atoms, molecules, organisms and templates. See https://bradfrost.com/blog/post/atomic-web-design/. 
+    - Brad Frosts Atomic Design was used in relation to component structure, thus why components are seperated into 4 distinct levels, namely atoms, molecules, organisms and templates. See https://bradfrost.com/blog/post/atomic-web-design/.
+
+    - Component were also prefixed with the prefix Y. This as for components to be easily distiguished from those provided by React Material UI.
 
 # Potential Improvements
 
