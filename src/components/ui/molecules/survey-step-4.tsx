@@ -22,7 +22,7 @@ const YSurveyStep4 = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(validateSurvey());
-  }, []);
+  });
 
   const { isValid }: ISurveyMeta = useAppSelector(selectSurveyMeta);
 
